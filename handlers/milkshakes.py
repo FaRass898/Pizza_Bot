@@ -67,15 +67,17 @@ async def fruit_smoothie_order(message: types.Message):
 
 @milkshakes_router.message(F.text.lower() == "вишневый фреш")
 async def cherry_fresh_order(message: types.Message):
+    kb = types.ReplyKeyboardRemove()
     keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_cherry_fresh"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="mocktails_and_milkshakes")
+                types.InlineKeyboardButton(text="Заказать", callback_data="order_cherry_fresh", ),
+                types.InlineKeyboardButton(text="Отмена", callback_data="mocktails_and_milkshakes", )
             ]
         ]
     )
     await message.answer("Хотели бы вы заказать вишневый фреш?", reply_markup=keyboard)
+
 
 @milkshakes_router.message(F.text.lower() == "клубничный лимонад")
 async def strawberry_lemonade_order(message: types.Message):

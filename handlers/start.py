@@ -14,7 +14,7 @@ async def start(message: types.Message):
             ],
             [
                 types.InlineKeyboardButton(text="О нас", callback_data="/about_us"),
-                types.InlineKeyboardButton(text="наш сайт", url="https://ru.wikipedia.org/wiki/Five_Nights_at_Freddy%E2%80%99s")
+                types.InlineKeyboardButton(text="Оставить отзыв", callback_data="survey")
             ],
             [
                 types.InlineKeyboardButton(text='Instagram', url='https://www.instagram.com/fnafmovie/'),
