@@ -6,6 +6,7 @@ menu_router = Router()
 
 @menu_router.callback_query(F.data == "menu")
 async def menu_callback_query(callback: types.CallbackQuery):
+
     photo = types.FSInputFile("images/menu.jpg")
     keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[

@@ -42,54 +42,17 @@ async def wings_menu(callback: types.CallbackQuery):
         reply_markup=kb
     )
 
+nuggets_types = ("острые","барбекю","терияки","чесночные")
 
-@nuggets_router.message(F.text.lower() == "острые")
-async def wings_spicy(message: types.Message):
+@nuggets_router.message(F.text.lower().in_(nuggets_types))
+async def nuggets_one (message: types.Message):
+    nuggets = message.text
     keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_spicy_wings"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="wings")
+                types.InlineKeyboardButton(text="Заказать", callback_data="order_margarita"),
+                types.InlineKeyboardButton(text="Отмена", callback_data="nuggets")
             ]
         ]
     )
-    await message.answer("Хотели бы вы заказать острые куриные крылья?", reply_markup=keyboard)
-
-
-@nuggets_router.message(F.text.lower() == "барбекю")
-async def wings_bbq(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_bbq_wings"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="wings")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать куриные крылья с соусом барбекю?", reply_markup=keyboard)
-
-
-@nuggets_router.message(F.text.lower() == "терияки")
-async def wings_teriyaki(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_teriyaki_wings"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="wings")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать куриные крылья в соусе терияки?", reply_markup=keyboard)
-
-
-@nuggets_router.message(F.text.lower() == "чесночные")
-async def wings_garlic(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_garlic_wings"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="wings")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать куриные крылья с чесночным соусом?", reply_markup=keyboard)
+    await message.answer(f"Хотели бы вы заказать  {nuggets} нагетсы?", reply_markup=keyboard)

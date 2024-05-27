@@ -1,4 +1,5 @@
 from aiogram import Router,F, types
+from config import database
 
 
 pizza_router = Router()
@@ -8,7 +9,7 @@ async def pizza_menu(callback: types.CallbackQuery):
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
             [
-                types.KeyboardButton(text="маргарита")
+                types.KeyboardButton(text="Маргарита")
             ],
             [
                 types.KeyboardButton(text="Пепперони")
@@ -52,9 +53,11 @@ async def pizza_menu(callback: types.CallbackQuery):
 
     )
 
+pizza_types = ("маргарита","пепперони","гавайская","мясная","четыре сыра")
 
-@pizza_router.message(F.text.lower() == "маргарита")
+@pizza_router.message(F.text.lower().in_(pizza_types))
 async def pizza_one(message: types.Message):
+    pizza = message.text
     keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -63,56 +66,7 @@ async def pizza_one(message: types.Message):
             ]
         ]
     )
-    await message.answer("Хотели бы вы заказать пиццу Маргарита?", reply_markup=keyboard)
+    await message.answer(f"Хотели бы вы заказать пиццу {pizza}?", reply_markup=keyboard)
 
 
-@pizza_router.message(F.text.lower() == "пепперони")
-async def pizza_two(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_pepperoni"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="pizza")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать пиццу Пепперони?", reply_markup=keyboard)
 
-
-@pizza_router.message(F.text.lower() == "гавайская")
-async def pizza_three(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_hawaiian"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="pizza")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать пиццу Гавайская?", reply_markup=keyboard)
-
-
-@pizza_router.message(F.text.lower() == "мясная")
-async def pizza_four(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_meat"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="pizza")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать пиццу Мясная?", reply_markup=keyboard)
-
-
-@pizza_router.message(F.text.lower() == "четыре сыра")
-async def pizza_five(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_four_cheese"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="pizza")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать пиццу Четыре сыра?", reply_markup=keyboard)

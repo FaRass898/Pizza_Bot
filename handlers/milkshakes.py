@@ -1,4 +1,5 @@
 from aiogram import Router, types, F
+from aiogram.handlers import MessageHandler
 
 milkshakes_router = Router()
 
@@ -53,8 +54,11 @@ async def mocktails_and_milkshakes_menu(callback: types.CallbackQuery):
         reply_markup=kb
     )
 
-@milkshakes_router.message(F.text.lower() == "фруктовый смузи")
-async def fruit_smoothie_order(message: types.Message):
+milkshakes_types = ("Фруктовый смузи","Вишневый фреш","Клубничный лимонад","Ванильный","Шоколадный","Клубничный")
+
+@milkshakes_router.message(F.text.lower().in_(milkshakes_types))
+async def milkshakes_order(message: types.Message):
+    milkshakes = message.text
     keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -63,66 +67,6 @@ async def fruit_smoothie_order(message: types.Message):
             ]
         ]
     )
-    await message.answer("Хотели бы вы заказать фруктовый смузи?", reply_markup=keyboard)
-
-@milkshakes_router.message(F.text.lower() == "вишневый фреш")
-async def cherry_fresh_order(message: types.Message):
-    kb = types.ReplyKeyboardRemove()
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_cherry_fresh", ),
-                types.InlineKeyboardButton(text="Отмена", callback_data="mocktails_and_milkshakes", )
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать вишневый фреш?", reply_markup=keyboard)
+    await message.answer(f"Хотели бы вы заказать {milkshakes}?", reply_markup=keyboard)
 
 
-@milkshakes_router.message(F.text.lower() == "клубничный лимонад")
-async def strawberry_lemonade_order(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_strawberry_lemonade"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="mocktails_and_milkshakes")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать клубничный лимонад?", reply_markup=keyboard)
-
-@milkshakes_router.message(F.text.lower() == "ванильный")
-async def vanilla_milkshake_order(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_vanilla_milkshake"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="mocktails_and_milkshakes")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать ванильный молочный коктейль?", reply_markup=keyboard)
-
-@milkshakes_router.message(F.text.lower() == "шоколадный")
-async def chocolate_milkshake_order(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_chocolate_milkshake"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="mocktails_and_milkshakes")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать шоколадный молочный коктейль?", reply_markup=keyboard)
-
-@milkshakes_router.message(F.text.lower() == "клубничный")
-async def strawberry_milkshake_order(message: types.Message):
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Заказать", callback_data="order_strawberry_milkshake"),
-                types.InlineKeyboardButton(text="Отмена", callback_data="mocktails_and_milkshakes")
-            ]
-        ]
-    )
-    await message.answer("Хотели бы вы заказать клубничный молочный коктейль?", reply_markup=keyboard)
