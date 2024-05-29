@@ -1,5 +1,5 @@
 import httpx
-from parsel import Selector 
+from parsel import Selector
 
 
 class HouseCrawler:
