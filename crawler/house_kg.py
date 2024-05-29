@@ -1,13 +1,13 @@
 import httpx
-from parsel import Selector
-import pprint
+from parsel import Selector 
+
 
 class HouseCrawler:
     MAIN_URL = 'https://www.house.kg/snyat'
     BASE_URL = 'https://www.house.kg'
 
-    def get_page(self):
-        response = httpx.get(self.MAIN_URL)
+    async def get_page(self, url: str):
+        response = await httpx.get(self.MAIN_URL)
         print(response.status_code)
         return response.text
 
