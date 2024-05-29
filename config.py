@@ -17,6 +17,7 @@ dp = Dispatcher()
 async def set_commands():
     await bot.set_my_commands([
         types.BotCommand(command='start', description='начало'),
-        types.BotCommand(command='stop', description='конец опроса')
+        types.BotCommand(command='stop', description='конец опроса'),
+        types.BotCommand(command='search', description='поиск квартиры')
 
     ])
